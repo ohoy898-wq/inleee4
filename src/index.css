@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Pretendard:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Pretendard', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  
+  --color-vp-bg: #F0F4FF;
+  --color-vp-primary-blue: #4B7BFF;
+  --color-vp-primary-pink: #FF6BCB;
+  --color-vp-primary-green: #29FFA2;
+  --color-vp-primary-yellow: #F7FF58;
+  --color-vp-ink: #121212;
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--color-vp-bg)] text-[var(--color-vp-ink)] font-sans antialiased;
+  }
+}
+
+.neubrutalism-card {
+  @apply rounded-[32px] bg-white border-[3px] border-[var(--color-vp-ink)] shadow-[8px_8px_0px_var(--color-vp-ink)];
+}
+
+.neubrutalism-btn {
+  @apply rounded-[18px] border-[2px] border-[var(--color-vp-ink)] shadow-[4px_4px_0px_var(--color-vp-ink)] transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none;
+}
