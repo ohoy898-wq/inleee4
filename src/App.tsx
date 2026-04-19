@@ -249,6 +249,7 @@ export default function App() {
   const [currentId, setCurrentId] = useState('s1');
   const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
+  const [endingId, setEndingId] = useState<string>('ending_true');
 
   const stage = STAGES[currentId];
 
@@ -267,6 +268,7 @@ export default function App() {
   const handleNext = () => {
     const next = stage.choices[selectedChoice!].next;
     if (next.startsWith('ending_')) {
+      setEndingId(next);
       setScreen('ending');
     } else {
       setCurrentId(next);
@@ -456,26 +458,24 @@ export default function App() {
               className="flex-1 flex flex-col items-center justify-center text-center space-y-8"
             >
               <div className="space-y-4">
-                <div className="w-24 h-24 bg-vp-primary-yellow rounded-[24px] border-[3px] border-vp-ink flex items-center justify-center mx-auto shadow-[6px_6px_0px_var(--color-vp-ink)]">
+                <div className={`w-24 h-24 rounded-[24px] border-[3px] border-vp-ink flex items-center justify-center mx-auto shadow-[6px_6px_0px_var(--color-vp-ink)] bg-vp-primary-${ENDINGS[endingId].colorClass === 'emerald' ? 'green' : ENDINGS[endingId].colorClass === 'amber' ? 'yellow' : 'pink'}`}>
                     <Trophy className="w-12 h-12 text-vp-ink" />
                 </div>
-                <h2 className="text-4xl font-black text-vp-ink italic">시뮬레이션 종료!</h2>
+                <h2 className="text-4xl font-black text-vp-ink italic">{ENDINGS[endingId].title}</h2>
               </div>
               
               <div className="w-full bg-white rounded-[32px] p-8 space-y-6 border-[3px] border-vp-ink shadow-[8px_8px_0px_var(--color-vp-ink)] text-left">
                 <div className="space-y-2">
-                  <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Team Outcome</span>
-                  <p className="text-2xl font-black text-vp-ink">모둠 과제 제출 및 <br/><span className="text-vp-primary-blue">갈등 해결 완료!</span></p>
+                  <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">{ENDINGS[endingId].pillText}</span>
+                  <p className="text-2xl font-black text-vp-ink leading-tight" dangerouslySetInnerHTML={{ __html: ENDINGS[endingId].subtitle.replace('\n', '<br/>') }}></p>
                 </div>
                 <div className="h-[2px] bg-vp-ink w-full opacity-10" />
                 <div className="space-y-4">
-                   <div className="flex flex-wrap gap-2">
-                      <span className="bg-vp-primary-green text-vp-ink px-4 py-1.5 rounded-full text-[11px] font-black border-[2px] border-vp-ink">강점 활용</span>
-                      <span className="bg-vp-primary-blue text-white px-4 py-1.5 rounded-full text-[11px] font-black border-[2px] border-vp-ink">절차적 공정성</span>
-                      <span className="bg-vp-primary-pink text-white px-4 py-1.5 rounded-full text-[11px] font-black border-[2px] border-vp-ink">공감 대화</span>
-                   </div>
-                   <p className="text-sm text-slate-700 leading-relaxed font-bold">
-                      당신은 갈등 상황에서 감정적으로 대응하기보다 상대방의 입장을 먼저 생각하고, 구체적인 해결책을 제시하며 팀을 이끌었습니다. 수행평가에서 높은 점수를 기대할 수 있을 뿐만 아니라, 훌륭한 리더로서의 자질을 보여주었습니다.
+                   <p className="text-[15px] font-black text-vp-ink">
+                      {ENDINGS[endingId].result}
+                   </p>
+                   <p className="text-sm text-slate-700 leading-relaxed font-bold whitespace-pre-line">
+                      {ENDINGS[endingId].impact}
                    </p>
                 </div>
               </div>
